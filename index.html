@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffe4ee">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Chore Cuties">
+<title>Chore Cuties</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧸</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff7fa; --card:#ffffff; --ink:#5b4a5e; --muted:#a592a8;
+  --pink:#ff9ec4; --pink-soft:#ffe4ee; --lav:#cbb7ff; --lav-soft:#efe8ff;
+  --mint:#a8e6cf; --mint-soft:#e3f8ee; --peach:#ffd3b0; --butter:#fff1b8;
+  --a:#ff8fb8; --b:#9b8cff;
+  --shadow:0 6px 18px rgba(203,150,190,.22);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Quicksand',system-ui,sans-serif;font-weight:600}
+body{background:
+  radial-gradient(circle at 12% 0%,#ffe4ee 0,transparent 40%),
+  radial-gradient(circle at 100% 20%,#efe8ff 0,transparent 38%),
+  var(--bg);min-height:100vh}
+#app{max-width:480px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 16px) 16px calc(100px + env(safe-area-inset-bottom))}
+h1,h2,h3{font-family:'Fredoka',sans-serif;font-weight:600;margin:0}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.top h1{font-size:26px}
+.top small{display:block;color:var(--muted);font-family:'Quicksand';font-weight:600;font-size:13px;margin-top:2px}
+.me{display:flex;background:#fff;border-radius:999px;padding:4px;box-shadow:var(--shadow)}
+.me button{border:0;background:transparent;border-radius:999px;padding:7px 12px;font:inherit;font-size:14px;color:var(--muted);cursor:pointer}
+.me button.on{color:#fff}
+.me button.on.a{background:var(--a)} .me button.on.b{background:var(--b)}
+.bar{height:12px;background:#fff;border-radius:999px;overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,.06)}
+.bar>i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--pink),var(--lav));transition:width .4s}
+.hero{background:linear-gradient(135deg,var(--pink-soft),var(--lav-soft));border-radius:24px;padding:16px;box-shadow:var(--shadow);margin-bottom:16px}
+.hero .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.hero h2{font-size:18px}
+.sec{font-family:'Fredoka';font-size:15px;color:var(--muted);margin:18px 4px 8px;letter-spacing:.3px}
+.card{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:20px;padding:12px 14px;margin-bottom:10px;box-shadow:var(--shadow);border:2px solid transparent;transition:.2s}
+.card .em{font-size:28px;width:46px;height:46px;border-radius:16px;background:var(--butter);display:grid;place-items:center;flex:none}
+.card .txt{flex:1;min-width:0}
+.card .nm{font-size:16px;line-height:1.2}
+.card .sub{font-size:12px;color:var(--muted);margin-top:3px}
+.pts{background:var(--butter);border-radius:999px;padding:3px 9px;font-size:12px;color:#a07a00;white-space:nowrap}
+.btn{border:0;border-radius:14px;padding:9px 12px;font:inherit;font-size:13px;cursor:pointer;color:#fff;background:var(--pink);white-space:nowrap;box-shadow:0 3px 0 rgba(0,0,0,.08)}
+.btn:active{transform:translateY(2px);box-shadow:none}
+.btn.go{background:#6fd3a8}
+.btn.ghost{background:var(--lav-soft);color:var(--b);box-shadow:none}
+.btn.red{background:#ffd4d4;color:#d25a5a;box-shadow:none}
+.card.claimed{border-color:var(--lav);background:#fcfaff}
+.card.done{opacity:.8;background:var(--mint-soft)}
+.card.done .nm{text-decoration:line-through;text-decoration-color:var(--muted)}
+.who{display:inline-block;border-radius:999px;padding:2px 8px;color:#fff;font-size:11px}
+.who.a{background:var(--a)} .who.b{background:var(--b)}
+.btns{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.tabs{display:flex;background:#fff;border-radius:999px;padding:4px;margin-bottom:14px;box-shadow:var(--shadow)}
+.tabs button{flex:1;border:0;background:transparent;padding:8px;border-radius:999px;font:inherit;font-size:14px;color:var(--muted)}
+.tabs button.on{background:var(--pink);color:#fff}
+.score{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.pc{border-radius:24px;padding:16px;text-align:center;color:#fff;box-shadow:var(--shadow)}
+.pc.a{background:linear-gradient(160deg,#ffb3d1,var(--a))} .pc.b{background:linear-gradient(160deg,#c3b8ff,var(--b))}
+.pc .big{font-family:'Fredoka';font-size:38px;line-height:1.1}
+.pc .crown{font-size:22px;height:26px}
+.split{display:flex;height:16px;border-radius:999px;overflow:hidden;margin:4px 0 14px;background:#fff;box-shadow:var(--shadow)}
+.split i{display:block;transition:width .4s}
+.act{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px dashed #ecd9ea;font-size:14px}
+.act:last-child{border:0}
+.act .t{margin-left:auto;color:var(--muted);font-size:12px}
+nav{position:fixed;left:0;right:0;bottom:0;padding:8px 12px calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:center;pointer-events:none}
+nav .in{pointer-events:auto;display:flex;width:100%;max-width:456px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-radius:26px;padding:6px;box-shadow:0 8px 26px rgba(190,140,190,.35)}
+nav button{flex:1;border:0;background:transparent;border-radius:20px;padding:7px 0 6px;font:inherit;font-size:11px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button span{font-size:22px}
+nav button.on{background:var(--pink-soft);color:var(--pink)}
+.form{background:#fff;border-radius:22px;padding:14px;box-shadow:var(--shadow);margin-bottom:14px}
+.form label{display:block;font-size:12px;color:var(--muted);margin:10px 2px 4px}
+.form input,.form select,.form textarea{width:100%;border:2px solid var(--lav-soft);background:#fffdff;border-radius:14px;padding:10px 12px;font:inherit;font-size:15px;color:var(--ink);outline:none}
+.form input:focus,.form select:focus,.form textarea:focus{border-color:var(--pink)}
+.form .r{display:flex;gap:8px} .form .r>*{flex:1}
+.form .btn{width:100%;margin-top:12px;padding:12px;font-size:15px}
+.empty{text-align:center;color:var(--muted);padding:24px 10px;font-size:14px}
+.pop{position:fixed;left:50%;top:40%;transform:translate(-50%,0);font-family:'Fredoka';font-size:30px;color:var(--pink);pointer-events:none;animation:pop 1.1s ease-out forwards;text-shadow:0 2px 0 #fff;z-index:50}
+@keyframes pop{0%{opacity:0;transform:translate(-50%,10px) scale(.6)}20%{opacity:1;transform:translate(-50%,-10px) scale(1.2)}100%{opacity:0;transform:translate(-50%,-90px) scale(1)}}
+.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:999px;font-size:13px;z-index:60}
+.pill{display:inline-block;font-size:11px;padding:3px 9px;border-radius:999px;background:var(--mint-soft);color:#2c8a63}
+.pill.off{background:var(--butter);color:#a07a00}
+.note{font-size:12px;color:var(--muted);line-height:1.5;margin:8px 4px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<nav><div class="in" id="nav"></div></nav>
+
+<script>
+/* ============ Optional: paste your Firebase web config here (or in Settings inside the app) ============ */
+const FIREBASE_CONFIG = null; // e.g. {apiKey:"...",authDomain:"...",projectId:"...",appId:"..."}
+/* ====================================================================================================== */
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-3);
+const pad = n => String(n).padStart(2,'0');
+
+/* ---------- period keys ---------- */
+function dayKey(d=new Date()){return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}
+function weekKey(d=new Date()){const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());const dow=(x.getDay()+6)%7;x.setDate(x.getDate()-dow);return 'w'+dayKey(x)}
+function monthKey(d=new Date()){return `m${d.getFullYear()}-${pad(d.getMonth()+1)}`}
+const keyFor = (freq,d)=> freq==='daily'?dayKey(d):freq==='weekly'?weekKey(d):monthKey(d);
+const logKeyFor = (freq,ts)=> keyFor(freq,new Date(ts));
+
+/* ---------- state ---------- */
+const DEFAULT_CHORES = [
+  ['🍽️','Do the dishes','daily',10],['✨','Wipe kitchen counters','daily',5],['🗑️','Take out the trash','daily',5],
+  ['🛋️','Tidy living room','daily',5],['🍳','Cook dinner','daily',15],['🧺','Run a laundry load','daily',10],['🐾','Quick floor sweep','daily',8],
+  ['🧹','Vacuum the house','weekly',15],['🛁','Clean the bathroom','weekly',25],['🪣','Mop the floors','weekly',20],
+  ['🛏️','Change bed sheets','weekly',15],['🛒','Grocery run','weekly',20],['🧊','Clean out the fridge','weekly',10],
+  ['🔥','Deep clean the oven','monthly',40],['🪟','Wash the windows','monthly',30],['👚','Declutter closets','monthly',30],
+  ['🧾','Check & pay bills','monthly',20],['🧽','Wash bath mats & curtains','monthly',25]
+];
+function freshState(){
+  return {
+    people:[{id:'a',name:'Upa',emoji:'🧸'},{id:'b',name:'Bestie',emoji:'🐰'}],
+    chores:DEFAULT_CHORES.map(([emoji,name,freq,pts])=>({id:uid(),emoji,name,freq,pts})),
+    log:[], claims:{}, updated:0
+  };
+}
+let state = (()=>{try{return JSON.parse(localStorage.getItem('cc_state'))||freshState()}catch(e){return freshState()}})();
+let ui = {tab:'today', scoreRange:'week', me: localStorage.getItem('cc_me')||'a'};
+const person = id => state.people.find(p=>p.id===id)||state.people[0];
+const cls = id => id==='a'?'a':'b';
+
+function save(){
+  state.updated=Date.now();
+  localStorage.setItem('cc_state',JSON.stringify(state));
+  push();
+}
+
+/* ---------- sync (Firestore, optional) ---------- */
+let docRef=null, syncOn=false;
+const loadCfg = () => FIREBASE_CONFIG ? {firebase:FIREBASE_CONFIG,code:'home'} : (()=>{try{return JSON.parse(localStorage.getItem('cc_sync'))}catch(e){return null}})();
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s)})}
+async function initSync(){
+  const cfg=loadCfg(); if(!cfg||!cfg.firebase||!cfg.code) return;
+  try{
+    const v='10.12.2';
+    await loadScript(`https://www.gstatic.com/firebasejs/${v}/firebase-app-compat.js`);
+    await loadScript(`https://www.gstatic.com/firebasejs/${v}/firebase-firestore-compat.js`);
+    firebase.initializeApp(cfg.firebase);
+    docRef=firebase.firestore().collection('households').doc(String(cfg.code));
+    docRef.onSnapshot(snap=>{
+      syncOn=true;
+      if(snap.metadata.hasPendingWrites) return;
+      if(snap.exists){
+        try{
+          const remote=JSON.parse(snap.data().state);
+          if((remote.updated||0)>=(state.updated||0)){state=remote;localStorage.setItem('cc_state',JSON.stringify(state));render()}
+          else push();
+        }catch(e){}
+      } else push();
+      render();
+    },err=>{syncOn=false;toast('Sync error — check Firestore rules');render()});
+  }catch(e){toast('Could not start sync');}
+}
+function push(){ if(docRef) docRef.set({state:JSON.stringify(state),updated:Date.now()}).catch(()=>{}); }
+
+/* ---------- helpers for chore status ---------- */
+function entryFor(c){
+  const k=keyFor(c.freq);
+  return state.log.find(e=>e.choreId===c.id && logKeyFor(c.freq,e.ts)===k);
+}
+function claimFor(c){ return state.claims[c.id+'|'+keyFor(c.freq)]; }
+
+/* ---------- actions ---------- */
+function claim(id){const c=state.chores.find(x=>x.id===id);state.claims[id+'|'+keyFor(c.freq)]=ui.me;save();render()}
+function release(id){const c=state.chores.find(x=>x.id===id);delete state.claims[id+'|'+keyFor(c.freq)];save();render()}
+function complete(id){
+  const c=state.chores.find(x=>x.id===id);
+  const k=id+'|'+keyFor(c.freq);
+  const who=state.claims[k]&&state.claims[k]!==ui.me?ui.me:ui.me; // whoever taps done gets the points
+  delete state.claims[k];
+  state.log.push({id:uid(),choreId:id,who,ts:Date.now(),pts:c.pts,name:c.name,emoji:c.emoji,freq:c.freq});
+  save();render();pop(`+${c.pts} ✨`);
+}
+function undo(id){
+  const c=state.chores.find(x=>x.id===id);const k=keyFor(c.freq);
+  const i=state.log.findIndex(e=>e.choreId===id&&logKeyFor(c.freq,e.ts)===k);
+  if(i>-1){state.log.splice(i,1);save();render()}
+}
+function pop(t){const d=document.createElement('div');d.className='pop';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),1100)}
+function toast(t){const d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2400)}
+function setMe(id){ui.me=id;localStorage.setItem('cc_me',id);render()}
+function setTab(t){ui.tab=t;window.scrollTo({top:0});render()}
+
+/* ---------- views ---------- */
+function choreCard(c){
+  const e=entryFor(c), cl=claimFor(c);
+  if(e){
+    const p=person(e.who);
+    return `<div class="card done"><div class="em" style="background:var(--mint)">${esc(c.emoji)}</div>
+      <div class="txt"><div class="nm">${esc(c.name)}</div><div class="sub"><span class="who ${cls(e.who)}">${esc(p.emoji)} ${esc(p.name)}</span> did it · +${e.pts}</div></div>
+      <div class="btns"><button class="btn ghost" onclick="undo('${c.id}')">Undo</button></div></div>`;
+  }
+  if(cl){
+    const p=person(cl), mine=cl===ui.me;
+    return `<div class="card claimed"><div class="em" style="background:var(--lav-soft)">${esc(c.emoji)}</div>
+      <div class="txt"><div class="nm">${esc(c.name)}</div><div class="sub"><span class="who ${cls(cl)}">${esc(p.emoji)} ${esc(p.name)}</span> claimed it 💪 · <span class="pts">${c.pts} pts</span></div></div>
+      <div class="btns"><button class="btn go" onclick="complete('${c.id}')">Done ✓</button>
+      ${mine?`<button class="btn ghost" onclick="release('${c.id}')">Release</button>`:''}</div></div>`;
+  }
+  return `<div class="card"><div class="em">${esc(c.emoji)}</div>
+    <div class="txt"><div class="nm">${esc(c.name)}</div><div class="sub"><span class="pts">${c.pts} pts</span></div></div>
+    <div class="btns"><button class="btn" onclick="claim('${c.id}')">I’ve got it 🙋</button>
+    <button class="btn ghost" onclick="complete('${c.id}')">Already done</button></div></div>`;
+}
+function progressHero(freq,title,emoji){
+  const list=state.chores.filter(c=>c.freq===freq), done=list.filter(entryFor).length;
+  const pct=list.length?Math.round(done/list.length*100):0;
+  const msg=pct===100?'All done! You two are amazing 🎉':pct>=50?'More than halfway, keep going 💕':'Let’s get cozy and tidy ✨';
+  return `<div class="hero"><div class="row"><h2>${emoji} ${title}</h2><b>${done}/${list.length}</b></div>
+    <div class="bar"><i style="width:${pct}%"></i></div><div class="note" style="margin:8px 2px 0">${msg}</div></div>`;
+}
+function listFor(freq){
+  const list=state.chores.filter(c=>c.freq===freq);
+  if(!list.length) return `<div class="empty">No chores here yet — add some in Manage 🌸</div>`;
+  const open=list.filter(c=>!entryFor(c)), done=list.filter(entryFor);
+  return `${open.length?`<div class="sec">UP FOR GRABS · ${open.length}</div>`:''}${open.map(choreCard).join('')}
+          ${done.length?`<div class="sec">COMPLETED · ${done.length}</div>`:''}${done.map(choreCard).join('')}`;
+}
+function viewToday(){
+  const d=new Date(), h=d.getHours();
+  const hi=h<12?'Good morning':h<18?'Good afternoon':'Good evening';
+  const dt=d.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
+  return `<div class="top"><div><h1>${hi}, ${esc(person(ui.me).name)} ${esc(person(ui.me).emoji)}</h1><small>${dt}</small></div></div>
+    ${meSwitch()}${progressHero('daily','Today’s chores','🌞')}
+    <div class="note" style="margin-top:-6px">Pick any chore to claim it — whoever taps <b>Done</b> earns the points.</div>
+    ${listFor('daily')}`;
+}
+function meSwitch(){
+  return `<div style="display:flex;justify-content:center;margin-bottom:14px"><div class="me">
+    ${state.people.map(p=>`<button class="${ui.me===p.id?'on '+cls(p.id):''}" onclick="setMe('${p.id}')">${esc(p.emoji)} ${esc(p.name)}</button>`).join('')}
+  </div></div>`;
+}
+function viewFreq(freq){
+  const t=freq==='weekly'?['This week’s chores','🌷']:['This month’s chores','🌙'];
+  const end=freq==='weekly'?(()=>{const d=new Date();const left=7-((d.getDay()+6)%7)-1;return left===0?'resets tonight':`${left} day${left>1?'s':''} left`})()
+    :(()=>{const d=new Date();const left=new Date(d.getFullYear(),d.getMonth()+1,0).getDate()-d.getDate();return left===0?'resets tonight':`${left} day${left>1?'s':''} left`})();
+  return `<div class="top"><div><h1>${t[1]} ${freq==='weekly'?'Weekly':'Monthly'}</h1><small>${end}</small></div></div>
+    ${meSwitch()}${progressHero(freq,t[0],t[1])}${listFor(freq)}`;
+}
+function range(r){
+  const now=new Date();
+  return state.log.filter(e=>{const d=new Date(e.ts);
+    return r==='week'?weekKey(d)===weekKey(now):r==='month'?monthKey(d)===monthKey(now):true});
+}
+function viewPoints(){
+  const r=ui.scoreRange, rows=range(r);
+  const tot=Object.fromEntries(state.people.map(p=>[p.id,0]));
+  rows.forEach(e=>{if(tot[e.who]!==undefined)tot[e.who]+=e.pts});
+  const [A,B]=state.people, sum=tot[A.id]+tot[B.id];
+  const pa=sum?Math.round(tot[A.id]/sum*100):50;
+  const lead=tot[A.id]===tot[B.id]?null:tot[A.id]>tot[B.id]?A.id:B.id;
+  const recent=[...rows].sort((x,y)=>y.ts-x.ts).slice(0,25);
+  const fmt=ts=>{const d=new Date(ts);return d.toLocaleDateString(undefined,{weekday:'short'})+' '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'})};
+  const label=r==='week'?'this week':r==='month'?'this month':'all time';
+  return `<div class="top"><div><h1>🏆 Points</h1><small>${label}</small></div></div>
+    <div class="tabs">${[['week','Week'],['month','Month'],['all','All time']].map(([k,l])=>`<button class="${r===k?'on':''}" onclick="ui.scoreRange='${k}';render()">${l}</button>`).join('')}</div>
+    <div class="score">${[A,B].map(p=>`<div class="pc ${cls(p.id)}"><div class="crown">${lead===p.id?'👑':''}</div>
+      <div style="font-size:30px">${esc(p.emoji)}</div><div>${esc(p.name)}</div><div class="big">${tot[p.id]}</div><div style="font-size:12px;opacity:.9">points</div></div>`).join('')}</div>
+    <div class="split"><i style="width:${pa}%;background:var(--a)"></i><i style="width:${100-pa}%;background:var(--b)"></i></div>
+    <div class="note" style="text-align:center;margin-top:-6px">${sum?`${pa}% / ${100-pa}% of the effort`:'No points yet — go claim something! 💫'}</div>
+    <div class="sec">RECENT ACTIVITY</div>
+    <div class="form" style="padding:6px 14px">${recent.length?recent.map(e=>`<div class="act"><span style="font-size:22px">${esc(e.emoji)}</span>
+      <div><div>${esc(e.name)}</div><span class="who ${cls(e.who)}">${esc(person(e.who).name)}</span> <span class="pts">+${e.pts}</span></div>
+      <span class="t">${fmt(e.ts)}</span></div>`).join(''):`<div class="empty">Nothing logged yet 🌱</div>`}</div>`;
+}
+function viewManage(){
+  const cfg=loadCfg();
+  const groups=['daily','weekly','monthly'].map(f=>{
+    const l=state.chores.filter(c=>c.freq===f);
+    return `<div class="sec">${f.toUpperCase()}</div>`+(l.map(c=>`<div class="card" style="padding:8px 12px"><div class="em" style="width:38px;height:38px;font-size:22px">${esc(c.emoji)}</div>
+      <div class="txt"><div class="nm" style="font-size:15px">${esc(c.name)}</div><div class="sub">${c.pts} pts</div></div>
+      <button class="btn red" onclick="delChore('${c.id}')">✕</button></div>`).join('')||'<div class="empty">none</div>');
+  }).join('');
+  return `<div class="top"><div><h1>🌸 Manage</h1><small>chores, names & sync</small></div></div>
+    <div class="form"><h3 style="font-size:16px">Add a chore</h3>
+      <div class="r"><div style="flex:0 0 72px"><label>Emoji</label><input id="nEm" value="🧼" maxlength="4" style="text-align:center"></div>
+      <div><label>Name</label><input id="nNm" placeholder="Water the plants"></div></div>
+      <div class="r"><div><label>How often</label><select id="nFr"><option value="daily">Daily</option><option value="weekly">Weekly</option><option value="monthly">Monthly</option></select></div>
+      <div><label>Points</label><input id="nPt" type="number" inputmode="numeric" value="10" min="1"></div></div>
+      <button class="btn" onclick="addChore()">Add chore 💕</button></div>
+    ${groups}
+    <div class="sec">THE TWO OF YOU</div>
+    <div class="form"><div class="r"><div style="flex:0 0 64px"><label>Emoji</label><input id="e0" value="${esc(state.people[0].emoji)}" maxlength="4" style="text-align:center"></div><div><label>Name 1</label><input id="n0" value="${esc(state.people[0].name)}"></div></div>
+      <div class="r"><div style="flex:0 0 64px"><label>Emoji</label><input id="e1" value="${esc(state.people[1].emoji)}" maxlength="4" style="text-align:center"></div><div><label>Name 2</label><input id="n1" value="${esc(state.people[1].name)}"></div></div>
+      <button class="btn" onclick="savePeople()">Save names</button></div>
+    <div class="sec">SYNC BETWEEN PHONES ${syncOn?'<span class="pill">● live</span>':'<span class="pill off">local only</span>'}</div>
+    <div class="form"><div class="note" style="margin:0 0 4px">Paste your Firebase web config (JSON) and pick a shared household code. Use the same on both phones. See README.</div>
+      <label>Household code</label><input id="sCode" value="${esc(cfg?cfg.code:'')}" placeholder="our-home-123">
+      <label>Firebase config</label><textarea id="sCfg" rows="4" placeholder='{"apiKey":"…","projectId":"…","appId":"…"}'>${cfg&&cfg.firebase&&!FIREBASE_CONFIG?esc(JSON.stringify(cfg.firebase)):''}</textarea>
+      <button class="btn" onclick="saveSync()">Connect sync</button>
+      ${cfg&&!FIREBASE_CONFIG?`<button class="btn red" onclick="clearSync()" style="margin-top:8px">Disconnect</button>`:''}</div>
+    <div class="form"><button class="btn red" onclick="resetAll()" style="margin-top:0">Reset everything</button></div>`;
+}
+function addChore(){
+  const name=$('#nNm').value.trim(); if(!name){toast('Give it a name first 🌷');return}
+  state.chores.push({id:uid(),emoji:$('#nEm').value.trim()||'✨',name,freq:$('#nFr').value,pts:Math.max(1,parseInt($('#nPt').value)||5)});
+  save();render();toast('Chore added 💕');
+}
+function delChore(id){ if(!confirm('Remove this chore? Past points are kept.'))return; state.chores=state.chores.filter(c=>c.id!==id);save();render()}
+function savePeople(){
+  [0,1].forEach(i=>{state.people[i].name=$('#n'+i).value.trim()||state.people[i].name;state.people[i].emoji=$('#e'+i).value.trim()||state.people[i].emoji});
+  save();render();toast('Saved 🌸');
+}
+function saveSync(){
+  const code=$('#sCode').value.trim(); let fb;
+  try{ fb=JSON.parse($('#sCfg').value.trim().replace(/([{,]\s*)([A-Za-z_]\w*)\s*:/g,'$1"$2":').replace(/'/g,'"')) }catch(e){toast('That config isn’t valid JSON');return}
+  if(!code||!fb.projectId){toast('Need a code and a config with projectId');return}
+  localStorage.setItem('cc_sync',JSON.stringify({firebase:fb,code}));
+  toast('Connecting… reloading');setTimeout(()=>location.reload(),700);
+}
+function clearSync(){localStorage.removeItem('cc_sync');location.reload()}
+function resetAll(){ if(confirm('Delete ALL chores and points?')&&confirm('Really? This syncs to your partner too.')){state=freshState();save();render()}}
+
+/* ---------- render ---------- */
+const NAV=[['today','🌞','Today'],['weekly','🌷','Week'],['monthly','🌙','Month'],['points','🏆','Points'],['manage','🌸','Manage']];
+function render(){
+  const y=window.scrollY;
+  const v={today:viewToday,weekly:()=>viewFreq('weekly'),monthly:()=>viewFreq('monthly'),points:viewPoints,manage:viewManage}[ui.tab];
+  $('#app').innerHTML=v();
+  $('#nav').innerHTML=NAV.map(([k,e,l])=>`<button class="${ui.tab===k?'on':''}" onclick="setTab('${k}')"><span>${e}</span>${l}</button>`).join('');
+  window.scrollTo(0,y);
+}
+render();
+initSync();
+</script>
+</body>
+</html>
